@@ -4,6 +4,7 @@ Changelog
 0.6monet(17/12/2014)
 --------------------
 - monet version with template selection via select widget and source selection could search bot collection and folder [lucabel]
+- this repo is git@github.com:luca-bellenghi/redturtle.portlet.collection.git branch=monet_version
 
 0.5 (unreleased)
 ----------------
