@@ -134,11 +134,12 @@ class Assignment(BaseCollectionPortletAssignment):
     no_elements_text = ''
     css_class = ""
     target_more = None
+    exclude_context = True
 
     def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True, div_id="",
-                 image_ref=None, link_text=u'', link_value='', check_rss=False, show_dates=False,
+                 image_ref=None, link_text=u'', link_value='', check_rss=False, show_dates=False, exclude_context=True,
                  template_id='base_collection_portlet_view', no_elements_text='', css_class="", target_more=None):
-        BaseCollectionPortletAssignment.__init__(self, header=header, target_collection=target_collection, limit=limit, random=random, show_more=show_more, show_dates=show_dates)
+        BaseCollectionPortletAssignment.__init__(self, header=header, target_collection=target_collection, limit=limit, random=random, show_more=show_more, show_dates=show_dates, exclude_context=exclude_context)
         self.image_ref = image_ref
         self.link_text = link_text
         self.check_rss = check_rss
