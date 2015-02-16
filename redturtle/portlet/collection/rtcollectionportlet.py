@@ -33,10 +33,10 @@ class IRTCollectionPortlet(ICollectionPortlet):
             default_query='path:'))
 
     image_ref = schema.Choice(title=_(u"Background image"),
-                                description=_(u"Insert an image that will be shown as background of the header"),
-                                required=False,
-                                source=SearchableTextSourceBinder({'object_provides': IATImage.__identifier__},
-                                                                   default_query='path:'))
+                              description=_(u"Insert an image that will be shown as background of the header"),
+                              required=False,
+                              source=SearchableTextSourceBinder({'object_provides': IATImage.__identifier__},
+                                                                default_query='path:'))
 
     link_text = schema.TextLine(title=_("custom_more_label",
                                         default=u'Custom "more..." label'),
@@ -46,16 +46,16 @@ class IRTCollectionPortlet(ICollectionPortlet):
 
     target_more = schema.Choice(title=_("custom_more_target_label",
                                         default=u'Custom "more..." target'),
-                                  description=_("custom_more_target_help",
-                                                default=u'Select an object in the site, for the "more..." link. If empty, the link will be the collection.'),
-                                  required=False,
-                                  source=SearchableTextSourceBinder({'sort_on': 'getObjPositionInParent'}, default_query='path:'))
+                                description=_("custom_more_target_help",
+                                              default=u'Select an object in the site, for the "more..." link. If empty, the link will be the collection.'),
+                                required=False,
+                                source=SearchableTextSourceBinder({'sort_on': 'getObjPositionInParent'}, default_query='path:'))
 
     no_elements_text = schema.TextLine(title=_("no_elements_text_label",
                                                default=u'Text on "no elements found"'),
-                                               description=_("no_elements_text_label_help",
-                                                             default=u'Render template can use this to show a custom text when no collection shows no elements.'),
-                                               required=False)
+                                       description=_("no_elements_text_label_help",
+                                                     default=u'Render template can use this to show a custom text when no collection shows no elements.'),
+                                       required=False)
 
     check_rss = schema.Bool(title=_("check_rss_label",
                                     default=u'Show RSS link'),
@@ -65,15 +65,15 @@ class IRTCollectionPortlet(ICollectionPortlet):
 
     css_class = schema.TextLine(title=_("css_class_label",
                                         default=u'Portlet\'s CSS class'),
-                                  description=_("css_class_label_help",
-                                                default=u'Fill this to  assign a CSS class to the portlet (for style purpose)'),
-                                  required=False)
+                                description=_("css_class_label_help",
+                                              default=u'Fill this to  assign a CSS class to the portlet (for style purpose)'),
+                                required=False)
 
     div_id = schema.TextLine(title=_("div_id_label",
                                      default=u'Portlet\'s HTML id'),
-                                description=_("div_id_label_help",
-                                              default=u'Fill this to  assign an id to the portlet (for style purpose)'),
-                                required=False)
+                             description=_("div_id_label_help",
+                                           default=u'Fill this to  assign an id to the portlet (for style purpose)'),
+                             required=False)
 
     template_id = schema.Choice(
                           default=u"default_view",
@@ -264,6 +264,13 @@ class Renderer(BaseCollectionPortletRenderer):
                 results = collection.getFolderContents(batch=True, b_size=limit)
             else:
                 results = collection.getFolderContents()
+
+        exclude_context = getattr(self.data, 'exclude_context', False)
+        context_path = '/'.join(self.context.getPhysicalPath())
+        if exclude_context:
+            results = [
+                brain for brain in results
+                if brain.getPath() != context_path]
 
         if collection and limit and limit > 0:
             results = results[:limit]
